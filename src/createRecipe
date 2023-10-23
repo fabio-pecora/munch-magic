@@ -1,0 +1,58 @@
+import { useState } from "react";
+import { supabase } from "../lib/supabaseClient";
+
+export default function RecipeCreate() {
+    const [recipeName, setRecipeName] = useState("");
+    const [ingredients, setIngredients] = useState("");
+    const [instructions, setInstructions] = useState("");
+    const [loading, setLoading] = useState(false);
+
+    async function handleCreateRecipe() {
+        try {
+            setLoading(true);
+            const response = await sendRecipeToServer(recipeName, ingredients, instructions);
+
+    
+            setRecipeName("");
+            setIngredients("");
+            setInstructions("");
+        } catch (error) {
+            alert(error.error_description || error.message);
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    return (
+        <div className="recipe-create-container">
+            <h2>Create a New Recipe</h2>
+            <form>
+                <div>
+                    <label>Recipe Name</label>
+                    <input
+                        type="text"
+                        value={recipeName}
+                        onChange={(e) => setRecipeName(e.target.value)}
+                    />
+                </div>
+                <div>
+                    <label>Ingredients</label>
+                    <textarea
+                        value={ingredients}
+                        onChange={(e) => setIngredients(e.target.value)}
+                    />
+                </div>
+                <div>
+                    <label>Instructions</label>
+                    <textarea
+                        value={instructions}
+                        onChange={(e) => setInstructions(e.target.value)}
+                    />
+                </div>
+                <button onClick={handleCreateRecipe} disabled={loading}>
+                    {loading ? "Creating..." : "Create Recipe"}
+                </button>
+            </form>
+        </div>
+    );
+}

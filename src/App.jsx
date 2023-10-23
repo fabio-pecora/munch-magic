@@ -4,7 +4,8 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import Home from './Home';
-import Login from './Login';
+import Login from './Login'
+import Register from './Register';
 import { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabaseClient';
 function App() {
@@ -46,7 +47,7 @@ function App() {
     },
     {
       path: "/register",
-      element: (props) => <Home {...props} session={session} />,
+      element: <Register/>
     }
   ]);
 
