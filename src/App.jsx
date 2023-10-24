@@ -7,17 +7,25 @@ import Home from './Home';
 import Login from './Login'
 import Register from './Register';
 import UserProfile from './UserProfile'
+import CreateRecipe from './MakeRecipe';
 import { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabaseClient';
-function App() {
+import SignOutPage from './SignOutPage';
+
+function App() 
 
   const [session, setSession] = useState(null);
+  const [user, setUser] = useState(null);
 
 
   useEffect(() => {
     const getSession = async () => {
       const session = await supabase.auth.getSession();
-      setSession(session);
+
+      if(session) {
+      setSession(session.data.session);
+      setUser(session.data.session.user);
+      }
     }
     getSession();
 
@@ -34,7 +42,7 @@ function App() {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <Home />,
+      element: <Home session={session} user={user} />,
       children: [
         {
           path: "/",
@@ -54,6 +62,13 @@ function App() {
       path: "/profile",
       element: <UserProfile/>
     }
+      path: "/CreateRecipe", 
+      element: <CreateRecipe session={session} user={user} />
+    },
+    {
+      path: "/sign-out",
+      element: <SignOutPage />,
+    },
   ]);
 
   return (

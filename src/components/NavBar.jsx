@@ -1,15 +1,20 @@
 import { useState } from "react";
 import { Link } from 'react-router-dom'; // Import Link component
+import { supabase } from  "../../lib/supabaseClient"
+import { Link, useNavigate } from "react-router-dom";
 
 const NavBar = () => {
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(true);
 
+  let navigate = useNavigate();
+  
   const handleLogin = () => {
     setLoggedIn(true);
   };
 
-  const handleLogout = () => {
-    setLoggedIn(false);
+  const handleLogout = async () => {
+    console.log("Logging out");
+    navigate("/sign-out");
   };
 
   return (
@@ -19,25 +24,28 @@ const NavBar = () => {
           Home
         </Link>
         {loggedIn && (
-          <Link to="/my-recipes" className="ml-4 text-lg text-gray-800">
+          <>
+          <a href="/my-recipes" className="ml-4 text-lg text-gray-800">
             My Recipes
+          </a>
+          <Link to="/CreateRecipe" className="ml-4 text-lg text-gray-800">
+            Create Recipe
           </Link>
+          </>
         )}
       </div>
       <div className="flex items-center">
-        <div className="flex">
-          {loggedIn && (
-            <Link to="/account-settings" className="mr-4 text-lg text-gray-800">
-              Account Settings
-            </Link>
-          )}
-          <button
-            onClick={loggedIn ? handleLogout : handleLogin}
-            className="btn bg-pink-500 hover:bg-pink-600 text-white font-bold py-2 px-4 rounded"
-          >
-            {loggedIn ? "Log Out" : "Log In"}
-          </button>
-        </div>
+        {loggedIn && (
+          <a href="/account-settings" className="mr-4 text-lg text-gray-800">
+            Account Settings
+          </a>
+        )}
+        <button
+          onClick={handleLogout}
+          className="btn bg-pink-500 hover:bg-pink-600 text-white font-bold py-2 px-4 rounded"
+        >
+          {"Logout"}
+        </button>
         <Link to="/profile"> {/* Use Link for Profile button */}
           <button
             className="btn bg-pink-500 hover:bg-pink-600 text-white font-bold py-2 px-4 rounded ml-4"
