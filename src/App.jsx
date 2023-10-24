@@ -12,7 +12,7 @@ import { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabaseClient';
 import SignOutPage from './SignOutPage';
 
-function App() 
+function App() { 
 
   const [session, setSession] = useState(null);
   const [user, setUser] = useState(null);
@@ -61,10 +61,12 @@ function App()
     {
       path: "/profile",
       element: <UserProfile/>
-    }
+    },
+    {
       path: "/CreateRecipe", 
       element: <CreateRecipe session={session} user={user} />
     },
+
     {
       path: "/sign-out",
       element: <SignOutPage />,

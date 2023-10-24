@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Link } from 'react-router-dom'; // Import Link component
 import { supabase } from  "../../lib/supabaseClient"
 import { Link, useNavigate } from "react-router-dom";
 
