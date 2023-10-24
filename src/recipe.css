@@ -12,7 +12,7 @@ body {
     margin: 0;
     padding: 30;
     background: url('https://i.pinimg.com/originals/af/db/30/afdb30e83d6ca64eb482a6b40c295e08.jpg') no-repeat center center fixed;
-    background-size: cover; /* Cover the entire viewport */
+    background-size: cover; 
     display: flex;
     justify-content: center;
     align-items: center;
@@ -40,7 +40,7 @@ body {
     font-size: 18px;
     background-color: #fff;
     color: #333;
-    width: 100%; /* Make input fields 100% width */
+    width: 100%; 
 }
 
 .recipe-create-container button {
