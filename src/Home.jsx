@@ -1,8 +1,20 @@
 import NavBar from "./components/NavBar";
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
+const Home = ({session, user}) => {
 
-const Home = () => {
-    return (
+    const [loading, setLoading] = useState(false);
+    const [isLogged, setIsLogged] = useState(false);
+
+    useEffect(() => {
+      if (session) {
+        setIsLogged(true);
+      }
+    } , [session])
+
+    if(isLogged) {
+      return (
         <>
         <div className="App">
           <NavBar />
@@ -56,7 +68,22 @@ const Home = () => {
           </section>
         </div>
       </>
+      )
+    }
+    
+    else {
+    return (
+<section className="hero h-3/4 min-h-screen bg-pink-200" style={{ backgroundImage: `url('https://img.freepik.com/free-vector/hand-drawn-cute-food-frame-background_23-2149602177.jpg')` }}>      <div className="hero-content text-center">
+        <div className="max-w-md">
+          <h1 className="text-5xl font-bold">Welcome!</h1>
+          <p className="py-6">Join us and start your food journey.</p>
+          <Link to="/login" className="btn btn-primary mr-4">Log In</Link>
+          <Link to="/register" className="btn btn-secondary">Register</Link>
+        </div>
+      </div>
+    </section>
     )
+  }
 }
 
 export default Home
