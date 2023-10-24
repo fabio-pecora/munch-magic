@@ -11,12 +11,14 @@ import { supabase } from '../lib/supabaseClient';
 function App() {
 
   const [session, setSession] = useState(null);
+  const [user, setUser] = useState(null);
 
 
   useEffect(() => {
     const getSession = async () => {
       const session = await supabase.auth.getSession();
-      setSession(session);
+      setSession(session.data.session);
+      setUser(session.data.session.user);
     }
     getSession();
 
@@ -33,7 +35,7 @@ function App() {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <Home />,
+      element: <Home session={session} user={user} />,
       children: [
         {
           path: "/",
