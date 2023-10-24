@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useEffect, useState } from 'react';
 import "./recipe.css";
 import { supabase } from '../lib/supabaseClient';
@@ -18,12 +19,11 @@ const CreateRecipe = ({session, user}) => {
     instructions: '',
     image: '',
     // eslint-disable-next-line react/prop-types
-    author: user?.email,
+    author: session.data.session.user?.email,
   });
 
   useEffect(() => {
-    setUserEmail(user?.email);
-    console.log(userEmail);
+    setUserEmail(session.data.session.user?.email);
   }, [user]);
   
 
@@ -35,7 +35,6 @@ const CreateRecipe = ({session, user}) => {
     });
     console.log(recipeData);
   };
-
   
 
   const handleRecipeSubmit = async (e) => {
