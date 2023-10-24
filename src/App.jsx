@@ -6,7 +6,7 @@ import {
 import Home from './Home';
 import Login from './Login'
 import Register from './Register';
-import CreateRecipe from './createRecipe';
+import CreateRecipe from './MakeRecipe';
 import { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabaseClient';
 import SignOutPage from './SignOutPage';
