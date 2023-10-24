@@ -1,19 +1,31 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import "./recipe.css";
 import { supabase } from '../lib/supabaseClient';
+import NavBar from './components/NavBar';
+import { Link } from 'react-router-dom';
 
-const CreateRecipe = () => {
+const CreateRecipe = ({session, user}) => {
+
+  const [userEmail, setUserEmail] = useState(null);
+  const [message, setMessage] = useState(''); // Add this line
+
   const [recipeData, setRecipeData] = useState({
     recipeName: '',
     description: '',
-    serving: null,
-    prepTime: null,
-    cookTime: null,
+    serving: 0,
+    prepTime: 0,
+    cookTime: 0,
     instructions: '',
     image: '',
-    author: '',
-    creation_date: null,
+    // eslint-disable-next-line react/prop-types
+    author: user?.email,
   });
+
+  useEffect(() => {
+    setUserEmail(user?.email);
+    console.log(userEmail);
+  }, [user]);
+  
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -21,6 +33,7 @@ const CreateRecipe = () => {
       ...recipeData,
       [name]: value,
     });
+    console.log(recipeData);
   };
 
   
@@ -29,11 +42,13 @@ const CreateRecipe = () => {
     e.preventDefault(); 
     console.log('Form submitted'); 
 
+    console.log(recipeData);
 
     const currentDate = new Date().toISOString(); 
 
     
     try {
+      console.log('Attempting to insert recipe');
       const { data, error } = await supabase
         .from('recipes')
         .insert([
@@ -49,20 +64,52 @@ const CreateRecipe = () => {
             creation_date: currentDate,
           },
         ]);
-  
       if (error) {
         console.error('Error inserting recipe:', error);
+        setMessage('Recipe Failed to insert try again.'); // Add this line
       } else {
         console.log('Recipe inserted successfully:', data);
+        setMessage('Recipe inserted successfully.'); // Add this line
       }
     } catch (error) {
       console.error('An error occurred:', error);
     }
+
+    console.log('Form submission complete');
   };
   
+  if(!session) {
+    return (
+      <>
+      <div className="App">
+        <NavBar />
+        <section className="hero h-3/4 bg-pink-200">
+
+          <div className="hero-content text-center">
+            <div className="max-w-md">
+              <h1 className="text-5xl font-bold">Please Login</h1>
+              <Link to="/login" className="ml-4 text-lg text-gray-800">
+                Login
+              </Link>
+              <Link to="/register" className="ml-4 text-lg text-gray-800">
+                Register
+              </Link>
+            </div>
+          </div>
+          </section>
+        </div>
+      </>
+    )
+  }
+  else
   return (
+    <>
+    <NavBar />
+    <div className="min-w-screen min-h-screen recipebg">
+    
     <div className="recipe-create-container">
       <h1>Create a New Recipe</h1>
+      <p>{message}</p> {/* Display the message */}
       <form onSubmit={handleRecipeSubmit}>
         <div>
           <label>Recipe Name</label>
@@ -131,6 +178,8 @@ const CreateRecipe = () => {
         <button type="submit">Create Recipe</button>
       </form>
     </div>
+  </div>
+  </>
   );
 };
 

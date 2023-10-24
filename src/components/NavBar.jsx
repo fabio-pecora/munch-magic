@@ -1,21 +1,20 @@
 
 import { useState } from "react";
 import { supabase } from  "../../lib/supabaseClient"
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const NavBar = () => {
   const [loggedIn, setLoggedIn] = useState(true);
 
-  const navigate = useNavigate();
-
+  let navigate = useNavigate();
+  
   const handleLogin = () => {
     setLoggedIn(true);
   };
 
-  const handleLogout = () => {
-    setLoggedIn(false);
-    supabase.auth.signOut();
-    navigate("/login");
+  const handleLogout = async () => {
+    console.log("Logging out");
+    navigate("/sign-out");
   };
 
   return (
@@ -25,9 +24,14 @@ const NavBar = () => {
           Home
         </a>
         {loggedIn && (
+          <>
           <a href="/my-recipes" className="ml-4 text-lg text-gray-800">
             My Recipes
           </a>
+          <Link to="/CreateRecipe" className="ml-4 text-lg text-gray-800">
+            Create Recipe
+          </Link>
+          </>
         )}
       </div>
       <div className="flex items-center">
@@ -37,10 +41,10 @@ const NavBar = () => {
           </a>
         )}
         <button
-          onClick={loggedIn ? handleLogout : handleLogin}
+          onClick={handleLogout}
           className="btn bg-pink-500 hover:bg-pink-600 text-white font-bold py-2 px-4 rounded"
         >
-          {loggedIn ? "Log Out" : "Log In"}
+          {"Logout"}
         </button>
       </div>
     </nav>

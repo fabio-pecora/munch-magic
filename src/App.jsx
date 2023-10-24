@@ -9,6 +9,8 @@ import Register from './Register';
 import CreateRecipe from './createRecipe';
 import { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabaseClient';
+import SignOutPage from './SignOutPage';
+
 function App() {
 
   const [session, setSession] = useState(null);
@@ -18,8 +20,11 @@ function App() {
   useEffect(() => {
     const getSession = async () => {
       const session = await supabase.auth.getSession();
+
+      if(session) {
       setSession(session.data.session);
       setUser(session.data.session.user);
+      }
     }
     getSession();
 
@@ -54,8 +59,12 @@ function App() {
     },
     {
       path: "/CreateRecipe", 
-      element: <CreateRecipe />
-    }
+      element: <CreateRecipe session={session} user={user} />
+    },
+    {
+      path: "/sign-out",
+      element: <SignOutPage />,
+    },
   ]);
 
   return (
