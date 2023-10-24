@@ -6,12 +6,13 @@ import {
 import Home from './Home';
 import Login from './Login'
 import Register from './Register';
+import UserProfile from './UserProfile'
 import CreateRecipe from './MakeRecipe';
 import { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabaseClient';
 import SignOutPage from './SignOutPage';
 
-function App() {
+function App() 
 
   const [session, setSession] = useState(null);
   const [user, setUser] = useState(null);
@@ -58,6 +59,9 @@ function App() {
       element: <Register/>
     },
     {
+      path: "/profile",
+      element: <UserProfile/>
+    }
       path: "/CreateRecipe", 
       element: <CreateRecipe session={session} user={user} />
     },

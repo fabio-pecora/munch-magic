@@ -1,5 +1,5 @@
-
 import { useState } from "react";
+import { Link } from 'react-router-dom'; // Import Link component
 import { supabase } from  "../../lib/supabaseClient"
 import { Link, useNavigate } from "react-router-dom";
 
@@ -20,9 +20,9 @@ const NavBar = () => {
   return (
     <nav className="bg-yellow-200 border-b-2 border-yellow-300 flex items-center justify-between px-4 py-3">
       <div className="flex items-center">
-        <a href="/" className="text-2xl font-bold text-gray-800">
+        <Link to="/" className="text-2xl font-bold text-gray-800">
           Home
-        </a>
+        </Link>
         {loggedIn && (
           <>
           <a href="/my-recipes" className="ml-4 text-lg text-gray-800">
@@ -46,6 +46,13 @@ const NavBar = () => {
         >
           {"Logout"}
         </button>
+        <Link to="/profile"> {/* Use Link for Profile button */}
+          <button
+            className="btn bg-pink-500 hover:bg-pink-600 text-white font-bold py-2 px-4 rounded ml-4"
+          >
+            Profile
+          </button>
+        </Link>
       </div>
     </nav>
   );

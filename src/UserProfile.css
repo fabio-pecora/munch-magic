@@ -1,0 +1,141 @@
+/* Main card style */
+.user-main-card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    text-align: center;
+    padding: 20px;
+    border-radius: 10px;
+    margin: 0 auto; /* Center the main card */
+    background: linear-gradient(to bottom, #f7f1e7, #f4c45f); /* Gradient from light to gold */
+  }
+  
+  /* User info style */
+  .user-info {
+    color: grey;
+    font-size: 18px;
+  }
+  
+  /* Button style */
+  .see-recipes-button {
+    background-color: #007bff; /* Blue color */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 10px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .see-recipes-button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+  }
+  
+  /* Container for all user cards */
+  .user-profile-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px; /* Add margin-top for spacing */
+  }
+  
+  /* Style for cards on the left and right (user-introduction-card and user-favorite-recipes-card) */
+  .user-introduction-card,
+  .user-favorite-recipes-card {
+    width: calc(50% - 20px); /* 50% width for each card with 20px spacing between them */
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    text-align: center;
+    padding: 20px;
+    border-radius: 10px;
+  }
+  
+  /* Social links style */
+  .social-links a {
+    margin: 0 10px;
+  }
+  
+  .title {
+    color: grey;
+    font-size: 18px;
+  }
+  
+  .contact-button {
+    border: none;
+    outline: 0;
+    display: inline-block;
+    padding: 8px;
+    color: white;
+    background-color: #000;
+    text-align: center;
+    cursor: pointer;
+    width: 100%;
+    font-size: 18px;
+  }
+  
+  a {
+    text-decoration: none;
+    font-size: 22px;
+    color: black;
+  }
+  
+  button:hover,
+  a:hover {
+    opacity: 0.7;
+  }
+  
+  .user-profile-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  /* Style for grid images */
+  .grid-image {
+    width: 150px; /* Set your desired width */
+    height: 150px; /* Set your desired height */
+    object-fit: cover; /* Maintain aspect ratio and cover the container */
+    margin: 5px; /* Add margin to separate images */
+    display: inline-block;
+  }
+  
+  .my-dishes-title {
+    font-size: 32px; /* Adjust the font size as needed */
+    text-align: center;
+    margin-top: 20px; /* Adjust the margin as needed */
+  }
+  
+  /* CSS for the upload button */
+  .upload-button {
+    display: block; /* Make it a block-level element */
+    margin: 0 auto; /* Center horizontally */
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 10px; /* Add some spacing between the button and the images */
+  }
+  
+  .upload-button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+  }
+  
+  .user-name {
+    font-size: 34px; /* Increase font size for user name */
+  }
+
+body {
+    background-image: url('/images/Background.avif');
+    background-size: cover; /* Adjust the background size as needed */
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+  }
+  
+  
+  
