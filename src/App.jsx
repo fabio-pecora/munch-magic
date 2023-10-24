@@ -6,6 +6,7 @@ import {
 import Home from './Home';
 import Login from './Login'
 import Register from './Register';
+import CreateRecipe from './createRecipe';
 import { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabaseClient';
 function App() {
@@ -50,6 +51,10 @@ function App() {
     {
       path: "/register",
       element: <Register/>
+    },
+    {
+      path: "/CreateRecipe", 
+      element: <CreateRecipe />
     }
   ]);
 
