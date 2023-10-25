@@ -34,11 +34,9 @@ export default function Login() {
             alert(error.error_description || error.message);
         } finally {
             setLoading(false);
+            window.location.href = "/";
         }
 
-        if (session) {
-            navigate("/");
-        }
         
     }
 
