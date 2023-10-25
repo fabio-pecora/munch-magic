@@ -36,7 +36,7 @@ const RecipePage = () => {
       <p>{recipe.prepTime}</p>
       <p>{recipe.cookTime}</p>
       <p>{recipe.instructions}</p>
-      <p>{recipe.image}</p>
+      <img src={recipe.image} alt={recipe.recipeName} />
       <p>{recipe.serving}</p>
 
       {/* Render other recipe details... */}
