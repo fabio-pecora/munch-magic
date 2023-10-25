@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabaseClient';
 
 const SignOutPage = () => {
-  const navigate = useNavigate();
   const [countdown, setCountdown] = useState(2);
 
   useEffect(() => {
@@ -13,7 +11,7 @@ const SignOutPage = () => {
         setCountdown((prevCountdown) => {
           if (prevCountdown <= 1) {
             clearInterval(countdownInterval);
-            navigate('/');
+            window.location.href = '/';
           } else {
             return prevCountdown - 1;
           }
@@ -22,7 +20,7 @@ const SignOutPage = () => {
     };
 
     signOut();
-  }, [navigate]);
+  }, []);
 
   return (
     <div>
