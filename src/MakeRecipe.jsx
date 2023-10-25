@@ -47,6 +47,7 @@ const CreateRecipe = ({session, user}) => {
 
     
     try {
+      const { data: { user } } = await supabase.auth.getUser()
       console.log('Attempting to insert recipe');
       const { data, error } = await supabase
         .from('recipes')
@@ -59,7 +60,7 @@ const CreateRecipe = ({session, user}) => {
             cookTime: recipeData.cookTime,
             instructions: recipeData.instructions,
             image: recipeData.image,
-            author: recipeData.author,
+            author: user.email,
             creation_date: currentDate,
           },
         ]);

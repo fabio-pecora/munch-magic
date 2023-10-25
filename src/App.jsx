@@ -8,6 +8,8 @@ import Login from './Login'
 import Register from './Register';
 import UserProfile from './UserProfile'
 import CreateRecipe from './MakeRecipe';
+import MyRecipes from './MyRecipes';
+import RecipePage from './RecipePage';
 import { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabaseClient';
 import SignOutPage from './SignOutPage';
@@ -66,6 +68,14 @@ function App() {
       path: "/sign-out",
       element: <SignOutPage />,
     },
+    {
+      path: "/my-recipes",
+      element: <MyRecipes session={session} user={user}/>,
+    },
+    {
+      path: "/recipes/:id",
+      element: <RecipePage session={session} user={user} />,
+    }
   ]);
 
   return (
