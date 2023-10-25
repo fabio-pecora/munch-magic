@@ -1,9 +1,16 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import NavBar from './components/NavBar';
 import './UserProfile.css'; // Replace 'your-css-file.css' with the actual CSS file name
+import { supabase } from '../lib/supabaseClient'
 
-function UserProfile() {
+function UserProfile({session, user}) {
   // Sample user data (replace with actual data from your backend)
+  
+  const [newSession, setNewSession] = useState(session);
+  const [newUser, setNewUser] = useState(user);
+  const [userDb, setUserDb] = useState(null);
+  const [userRecipes, setUserRecipes] = useState(null);
+
   const userData = {
     name: 'Fabio Pecora',
     specialty: 'Italian Food',
@@ -12,6 +19,43 @@ function UserProfile() {
     favoriteRecipes: ['Recipe A', 'Recipe B', 'Recipe C'],
   };
 
+  useEffect(() => {
+    
+    if (session) {
+      setNewSession(session);
+      console.log(session);
+    }
+
+    if(user) {
+      setNewUser(user);
+      console.log(user);
+    }
+
+    const getUser = async () => {
+      const { data, error } = await supabase
+        .from('user')
+        .select('*')
+        .eq('email', user.email)
+        .single();
+      if (error) console.log(error);
+
+      setUserDb(data);
+    }
+
+    const getRecipes = async () => {
+      const { data, error } = await supabase
+        .from('recipes')
+        .select('*')
+        .eq('author', user.email)
+
+    if (error) console.log(error);
+    setUserRecipes(data);
+    }
+    
+    getRecipes();
+    getUser();
+
+  }, [session])
   // State to store the uploaded image source
   const [imageSrc, setImageSrc] = useState(null);
 
@@ -44,12 +88,14 @@ function UserProfile() {
       <NavBar />
       <div className="user-profile-container">
         <div className="user-main-card card">
+          {userDb && "Welcome" + userDb.email}
           <img
             src="/images/FabioPicture.PNG"
             alt="User"
             style={{ width: '100%' }}
           />
-          <h1 className="user-name">Fabio Pecora</h1>
+          <h1 className="user-name">{userDb?.username}</h1>
+          <h2> {userDb?.email} </h2> 
           <p className="user-info">
             Followers: {userData.followers} | Following: {userData.following}
           </p>

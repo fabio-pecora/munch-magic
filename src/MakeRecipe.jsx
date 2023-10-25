@@ -19,11 +19,11 @@ const CreateRecipe = ({session, user}) => {
     instructions: '',
     image: '',
     // eslint-disable-next-line react/prop-types
-    author: session.data.session.user?.email,
+    author: session?.data?.session?.user?.email,
   });
 
   useEffect(() => {
-    setUserEmail(session.data.session.user?.email);
+    setUserEmail(session?.data?.session?.user?.email);
   }, [user]);
   
 
