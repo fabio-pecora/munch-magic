@@ -44,12 +44,6 @@ function App() {
     {
       path: "/",
       element: <Home session={session} user={user} />,
-      children: [
-        {
-          path: "/",
-          element: (props) => <Home {...props} session={session} />,
-        },
-      ],
     },
     {
       path: "/login",
