@@ -24,9 +24,9 @@ const NavBar = () => {
         </Link>
         {loggedIn && (
           <>
-          <a href="/my-recipes" className="ml-4 text-lg text-gray-800">
+          <Link to="/my-recipes" className="ml-4 text-lg text-gray-800">
             My Recipes
-          </a>
+          </Link>
           <Link to="/CreateRecipe" className="ml-4 text-lg text-gray-800">
             Create Recipe
           </Link>
