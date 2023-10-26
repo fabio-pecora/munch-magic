@@ -1,0 +1,51 @@
+.recipe-page {
+    background-color: rgb(244, 244, 238);
+    background-image: url("https://cmkt-image-prd.global.ssl.fastly.net/0.1.0/ps/5300690/2976/1984/m1/fpnw/wm0/light-grey-background-.jpg?1541109596&s=100424620c8c323575d23992f1d7cad5");
+    background-size: cover; 
+
+    background-repeat: no-repeat;
+    
+
+  }
+  
+  .recipe-title {
+    background-size: cover; 
+    background-position: center;
+    background-repeat: no-repeat;
+    font-size: 80px;
+    color: brown;
+    text-align: center;
+    padding: 10px;
+    width: 100%;
+    text-decoration: underline; 
+
+
+}
+
+
+ .flex-container {
+    display: flex;
+    align-items: center; 
+  }
+  
+  .flex-item {
+    flex: 1; 
+    text-align: center;
+  }
+  
+  .recipe-image {
+    max-width: 80%; 
+    height: auto;
+    display: block; 
+    margin-left: 50px;
+      margin-top:80px ;
+}
+
+
+
+  .h2{
+    font-weight: bold; 
+    text-decoration: underline; 
+    color:brown;
+    font-size: 25px;
+  }
