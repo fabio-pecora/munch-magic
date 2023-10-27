@@ -1,11 +1,11 @@
-/* Main card style */
+
 .user-main-card {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     text-align: center;
     padding: 20px;
     border-radius: 10px;
-    margin: 0 auto; /* Center the main card */
-    background: linear-gradient(to bottom, #f7f1e7, #f4c45f); /* Gradient from light to gold */
+    margin: 0 auto; 
+    background: linear-gradient(to bottom, #1ce6d2, #1ce6d2);
   }
   
   /* User info style */
@@ -131,8 +131,8 @@
   }
 
 body {
-    background-image: url('/images/Background.avif');
-    background-size: cover; /* Adjust the background size as needed */
+    background-image:  url('https://img.freepik.com/free-vector/hand-drawn-cute-food-frame-background_23-2149602177.jpg');
+    background-size: cover;  
     background-repeat: no-repeat;
     background-attachment: fixed;
   }

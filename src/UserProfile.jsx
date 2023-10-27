@@ -1,85 +1,87 @@
 import React, { useState, useRef, useEffect } from 'react';
 import NavBar from './components/NavBar';
-import './UserProfile.css'; // Replace 'your-css-file.css' with the actual CSS file name
-import { supabase } from '../lib/supabaseClient'
+import './UserProfile.css'; // Import your CSS file
+import { createClient } from '@supabase/supabase-js';
 
-function UserProfile({session, user}) {
-  // Sample user data (replace with actual data from your backend)
-  
+const supaBaseUrl = 'https://vuqbxohgmdijaofjmhwt.supabase.co/';
+const supaBaseAPIKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ1cWJ4b2hnbWRpamFvZmptaHd0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTcwNDUwMzMsImV4cCI6MjAxMjYyMTAzM30.WmAeqNmSz3BpfTdq_WOS6bGGEdlGyTWjS1KyyXdokl8';
+const storageURLExtension = '/storage/v1/object/public/'
+
+const supabaseClient = createClient(
+  supaBaseUrl,
+  supaBaseAPIKey
+);
+
+function UserProfile({ session, user }) {
   const [newSession, setNewSession] = useState(session);
   const [newUser, setNewUser] = useState(user);
   const [userDb, setUserDb] = useState(null);
   const [userRecipes, setUserRecipes] = useState(null);
-
-  const userData = {
-    name: 'Fabio Pecora',
-    specialty: 'Italian Food',
-    followers: 1000,
-    following: 500,
-    favoriteRecipes: ['Recipe A', 'Recipe B', 'Recipe C'],
-  };
+  const [images, setImages] = useState([]); // Store uploaded images
 
   useEffect(() => {
-    
     if (session) {
       setNewSession(session);
-      console.log(session);
     }
-
-    if(user) {
+    if (user) {
       setNewUser(user);
-      console.log(user);
     }
-
     const getUser = async () => {
-      const { data, error } = await supabase
-        .from('user')
-        .select('*')
-        .eq('email', user.email)
-        .single();
-      if (error) console.log(error);
-
-      setUserDb(data);
-    }
-
+      if (user) { // Check if user exists
+        const { data, error } = await supabaseClient
+          .from('user')
+          .select('*')
+          .eq('email', user.email)
+          .single();
+        if (error) {
+          console.log(error);
+        }
+        setUserDb(data);
+      }
+    };
     const getRecipes = async () => {
-      const { data, error } = await supabase
-        .from('recipes')
-        .select('*')
-        .eq('author', user.email)
-
-    if (error) console.log(error);
-    setUserRecipes(data);
-    }
-    
+      if (user) { // Check if user exists
+        const { data, error } = await supabaseClient
+          .from('recipes')
+          .select('*')
+          .eq('author', user.email);
+        if (error) {
+          console.log(error);
+        }
+        setUserRecipes(data);
+      }
+    };
     getRecipes();
     getUser();
+  }, [session, user]);
 
-  }, [session])
-  // State to store the uploaded image source
-  const [imageSrc, setImageSrc] = useState(null);
 
-  // Reference to the hidden file input
   const fileInputRef = useRef(null);
 
-  // Function to open the file dialog
   function handleOpenFileDialog() {
     fileInputRef.current.click();
   }
 
-  // Function to handle image upload
-  function handleImageUpload(event) {
+  
+
+  async function handleImageUpload(event) {
     const file = event.target.files[0];
 
     if (file) {
-      const reader = new FileReader();
+      const bucketName = 'profile_photo'; // Replace with your actual bucket name
+      const filePath = `${userDb.email}/${file.name}`; // Define the file path
+      const { data, error } = await supabaseClient.storage
+        .from(bucketName)
+        .upload(filePath, file);
 
-      reader.onload = (e) => {
-        const uploadedImageSrc = e.target.result;
-        setImageSrc(uploadedImageSrc);
-      };
-
-      reader.readAsDataURL(file);
+      if (error) {
+        console.error('Error uploading file:', error);
+      } else {
+        console.log('File uploaded successfully:', data);
+        const uploadedImageUrl = supaBaseUrl + storageURLExtension + bucketName + '/' + data.path;
+        // Add the uploaded image to the images array
+        setImages((prevImages) => [...prevImages, uploadedImageUrl]);
+      }
     }
   }
 
@@ -88,29 +90,26 @@ function UserProfile({session, user}) {
       <NavBar />
       <div className="user-profile-container">
         <div className="user-main-card card">
-          {userDb && "Welcome" + userDb.email}
+          {userDb && `Welcome ${userDb.email}`}
           <img
-            src="/images/FabioPicture.PNG"
+            src="/images/NoUserPicture.jpg"
             alt="User"
             style={{ width: '100%' }}
           />
           <h1 className="user-name">{userDb?.username}</h1>
-          <h2> {userDb?.email} </h2> 
+          <h2> {userDb?.email} </h2>
           <p className="user-info">
-            Followers: {userData.followers} | Following: {userData.following}
+            Followers: {userDb?.followers} | Following: {userDb?.following}
           </p>
-          <button className="see-recipes-button">See Recipes</button>
+          <button className="see-recipes-button" onClick={()=> location.href = "/my-recipes"}>See Recipes</button>
         </div>
 
         <div className="user-picture-section card">
           <h1 className="my-dishes-title">#MyDishes</h1>
           <div className="picture-grid">
-            <img src="/images/Lasagna.PNG" alt="Lasagna" className="grid-image" />
-            <img src="/images/Cotoletta.jpg" alt="Cotoletta" className="grid-image" />
-            <img src="/images/Pesto.jpg" alt="Pesto" className="grid-image" />
-            <img src="/images/Pizza.jpg" alt="Pizza" className="grid-image" />
-            <img src="/images/Pork.jpg" alt="Pork" className="grid-image" />
-            <img src="/images/Pasta.jpg" alt="Pasta" className="grid-image" />
+            {images.map((imageUrl, index) => (
+              <img key={index} src={imageUrl} alt="Uploaded" className="grid-image" />
+            ))}
           </div>
           <button className="upload-button" onClick={handleOpenFileDialog}>
             Add Image
@@ -125,7 +124,6 @@ function UserProfile({session, user}) {
               style={{ display: 'none' }}
             />
           </div>
-          {imageSrc && <img src={imageSrc} alt="Uploaded" className="uploaded-image" />}
         </div>
       </div>
     </div>
