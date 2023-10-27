@@ -24,6 +24,7 @@ function App() {
     const getSession = async () => {
       const session = await supabase.auth.getSession();
 
+
       if(session) {
       setSession(session.data.session);
       setUser(session.data.session.user);
@@ -56,7 +57,7 @@ function App() {
     },
     {
       path: "/profile",
-      element: <UserProfile/>
+      element: <UserProfile session = {session} user = {user}/>
     },
     {
       path: "/CreateRecipe", 

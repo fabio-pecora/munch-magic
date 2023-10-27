@@ -1,11 +1,10 @@
-/* Main card style */
+
 .user-main-card {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     text-align: center;
     padding: 20px;
     border-radius: 10px;
-    margin: 0 auto; /* Center the main card */
-    background: linear-gradient(to bottom, #f7f1e7, #f4c45f); /* Gradient from light to gold */
+    
   }
   
   /* User info style */
@@ -35,9 +34,8 @@
   
   /* Container for all user cards */
   .user-profile-container {
-    display: flex;
-    justify-content: space-between;
     margin-top: 20px; /* Add margin-top for spacing */
+    
   }
   
   /* Style for cards on the left and right (user-introduction-card and user-favorite-recipes-card) */
@@ -84,12 +82,7 @@
     opacity: 0.7;
   }
   
-  .user-profile-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
+ 
   /* Style for grid images */
   .grid-image {
     width: 150px; /* Set your desired width */
@@ -131,11 +124,13 @@
   }
 
 body {
-    background-image: url('/images/Background.avif');
-    background-size: cover; /* Adjust the background size as needed */
+    background-image:  url('https://img.freepik.com/free-vector/hand-drawn-cute-food-frame-background_23-2149602177.jpg');
+    background-size: cover;  
     background-repeat: no-repeat;
     background-attachment: fixed;
   }
   
-  
-  
+  .center {
+    border: 5px pink;
+    text-align: center;
+  }
