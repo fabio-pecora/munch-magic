@@ -2,6 +2,10 @@ import React, { useState, useRef, useEffect } from 'react';
 import NavBar from './components/NavBar';
 import './UserProfile.css'; // Import your CSS file
 import { createClient } from '@supabase/supabase-js';
+import { SketchPicker } from 'react-color';
+import ColorPicker from './components/ColorPicker';
+import { redirect } from 'react-router-dom';
+import classNames from 'classnames';
 
 const supaBaseUrl = 'https://vuqbxohgmdijaofjmhwt.supabase.co/';
 const supaBaseAPIKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ1cWJ4b2hnbWRpamFvZmptaHd0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTcwNDUwMzMsImV4cCI6MjAxMjYyMTAzM30.WmAeqNmSz3BpfTdq_WOS6bGGEdlGyTWjS1KyyXdokl8';
@@ -18,7 +22,7 @@ function UserProfile({ session, user }) {
   const [userDb, setUserDb] = useState(null);
   const [userRecipes, setUserRecipes] = useState(null);
   const [images, setImages] = useState([]); // Store uploaded images
-
+  const [bkcolor, setbkcolor] = useState("#E3E3DC");
   useEffect(() => {
     if (session) {
       setNewSession(session);
@@ -83,14 +87,22 @@ function UserProfile({ session, user }) {
         setImages((prevImages) => [...prevImages, uploadedImageUrl]);
       }
     }
+    
   }
+
+  const styles = {
+    backgroundColor: bkcolor
+	}
 
   return (
     <div>
       <NavBar />
-      <div className="user-profile-container">
-        <div className="user-main-card card">
-          {userDb && `Welcome ${userDb.email}`}
+
+
+
+
+      <div className="user-profile-container" style={{display:"flex",flexDirection:"row",justifyContent:"space-around"}}>
+        <div className="user-main-card" style={styles}>
           <img
             src="/images/NoUserPicture.jpg"
             alt="User"
@@ -104,27 +116,39 @@ function UserProfile({ session, user }) {
           <button className="see-recipes-button" onClick={()=> location.href = "/my-recipes"}>See Recipes</button>
         </div>
 
-        <div className="user-picture-section card">
-          <h1 className="my-dishes-title">#MyDishes</h1>
-          <div className="picture-grid">
-            {images.map((imageUrl, index) => (
-              <img key={index} src={imageUrl} alt="Uploaded" className="grid-image" />
-            ))}
-          </div>
-          <button className="upload-button" onClick={handleOpenFileDialog}>
-            Add Image
-          </button>
-          <div style={{ marginTop: '10px' }}>
-            <input
-              type="file"
-              accept="image/*"
-              id="picture-upload"
-              ref={fileInputRef}
-              onChange={handleImageUpload}
-              style={{ display: 'none' }}
-            />
-          </div>
+        <div>
+          <ColorPicker color={bkcolor} handleColorChange={(event)=>setbkcolor(event.hex)} />
+          <p class="center">Style your card!!</p>
         </div>
+      </div>
+
+
+
+
+
+
+
+      <div>
+        <div className="user-picture-section card">
+            <h1 className="my-dishes-title">#MyDishes</h1>
+            <div className="picture-grid">
+              {images.map((imageUrl, index) => (
+                <img key={index} src={imageUrl} alt="Uploaded" className="grid-image" />
+              ))}
+            </div>
+            <button className="upload-button" onClick={handleOpenFileDialog}>
+              Add Image
+            </button>
+            <div style={{ marginTop: '10px' }}>
+              <input
+                type="file"
+                accept="image/*"
+                id="picture-upload"
+                ref={fileInputRef}
+                onChange={handleImageUpload}
+                style={{ display: 'none' }}/>
+            </div>
+          </div>
       </div>
     </div>
   );
