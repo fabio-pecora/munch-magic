@@ -40,8 +40,12 @@ function MyRecipes() {
   return (
     <div className="min-h-screen " style={{backgroundImage: "url(https://img.pikbest.com/backgrounds/20190821/drawing-cartoon-cute-food-banner-background_2759254.jpg!bwr800)", backgroundRepeat: "repeat"}}>
       <NavBar />
-      <h1 className="text-2xl font-bold">My Recipes</h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-4 mt-10 p-10">
+      <div className=" mt-5 min-w-full flex justify-center justify-self-center">
+      <h1 className="text-2xl font-bold text-white bg-gradient-to-r from-pink-400 to-red-500 py-2 px-4 rounded-full inline-block text-center">
+  My Recipes
+</h1>
+    </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mt-10 p-10">
         {recipes.length === 0 && <div>Loading...</div>}
         {recipes.map((recipe) => (
             <Link
@@ -52,10 +56,11 @@ function MyRecipes() {
               <div className="card bordered">
                 <figure>
                   {/* Add image if available */}
-                  <img src={recipe.image} onError={(e) => {e.target.onerror = null; e.target.src="https://health.gov/sites/default/files/2019-06/SVG%20Layer4.svg"}} width={"50%"} height = {"50%"} />
+                  <img src={recipe.image} onError={(e) => {e.target.onerror = null; e.target.src="https://health.gov/sites/default/files/2019-06/SVG%20Layer4.svg"}} width={"50%"} height = {100} className="p-2" />
                 </figure> 
                 <div className="card-body">
-                <p className="text-center text-2xl font-bold"> {recipe.recipeName} </p>
+                  <p className="text-center text-2xl font-bold"> {recipe.recipeName} </p>
+                  <p>{recipe.description.split(' ').slice(0, 10).join(' ')}...</p>
                 </div>
               </div>
             </Link>
