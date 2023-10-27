@@ -123,7 +123,7 @@
     font-size: 34px; /* Increase font size for user name */
   }
 
-body {
+  .backgroundUser {
     background-image:  url('https://img.freepik.com/free-vector/hand-drawn-cute-food-frame-background_23-2149602177.jpg');
     background-size: cover;  
     background-repeat: no-repeat;

@@ -30,7 +30,7 @@ const RecipePage = () => {
   }
 
   return (
-    <div className="recipe-page">
+    <div className="recipe-page min-h-screen">
       <div className="recipe-title">
         <h1>{recipe.recipeName}</h1>
       </div>
@@ -61,7 +61,7 @@ const RecipePage = () => {
         </div>
 
         <div className="flex-item">
-         <h2 className='h2'>Instuction</h2>
+         <h2 className='h2'>Instructions</h2>
           <p><strong>{recipe.instructions}</strong></p>
         </div>
         

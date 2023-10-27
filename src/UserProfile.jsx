@@ -95,12 +95,8 @@ function UserProfile({ session, user }) {
 	}
 
   return (
-    <div>
+    <div className="min-h-screen min-w-max backgroundUser">
       <NavBar />
-
-
-
-
       <div className="user-profile-container" style={{display:"flex",flexDirection:"row",justifyContent:"space-around"}}>
         <div className="user-main-card" style={styles}>
           <img
