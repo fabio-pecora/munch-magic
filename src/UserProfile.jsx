@@ -4,12 +4,12 @@ import './UserProfile.css'; // Import your CSS file
 import { createClient } from '@supabase/supabase-js';
 import { SketchPicker } from 'react-color';
 import ColorPicker from './components/ColorPicker';
-import { redirect } from 'react-router-dom';
 import classNames from 'classnames';
+import WebFont from 'webfontloader';
 
 const supaBaseUrl = 'https://vuqbxohgmdijaofjmhwt.supabase.co/';
-const supaBaseAPIKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ1cWJ4b2hnbWRpamFvZmptaHd0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTcwNDUwMzMsImV4cCI6MjAxMjYyMTAzM30.WmAeqNmSz3BpfTdq_WOS6bGGEdlGyTWjS1KyyXdokl8';
-const storageURLExtension = '/storage/v1/object/public/'
+const supaBaseAPIKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ1cWJ4b2hnbWRpamFvZmptaHd0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTcwNDUwMzMsImV4cCI6MjAxMjYyMTAzM30.WmAeqNmSz3BpfTdq_WOS6bGGEdlGyTWjS1KyyXdokl8'; // Replace with your Supabase API key
+const storageURLExtension = '/storage/v1/object/public/';
 
 const supabaseClient = createClient(
   supaBaseUrl,
@@ -21,8 +21,10 @@ function UserProfile({ session, user }) {
   const [newUser, setNewUser] = useState(user);
   const [userDb, setUserDb] = useState(null);
   const [userRecipes, setUserRecipes] = useState(null);
-  const [images, setImages] = useState([]); // Store uploaded images
-  const [bkcolor, setbkcolor] = useState("#E3E3DC");
+  const [images, setImages] = useState([]);
+  const [bkcolor, setbkcolor] = useState("#EDED8C");
+  const [showColorPicker, setShowColorPicker] = useState(false); // State to toggle the ColorPicker
+
   useEffect(() => {
     if (session) {
       setNewSession(session);
@@ -31,7 +33,7 @@ function UserProfile({ session, user }) {
       setNewUser(user);
     }
     const getUser = async () => {
-      if (user) { // Check if user exists
+      if (user) {
         const { data, error } = await supabaseClient
           .from('user')
           .select('*')
@@ -44,7 +46,7 @@ function UserProfile({ session, user }) {
       }
     };
     const getRecipes = async () => {
-      if (user) { // Check if user exists
+      if (user) {
         const { data, error } = await supabaseClient
           .from('recipes')
           .select('*')
@@ -59,6 +61,12 @@ function UserProfile({ session, user }) {
     getUser();
   }, [session, user]);
 
+  // Load Google Fonts
+  WebFont.load({
+    google: {
+      families: ['Pacifico', 'cursive']
+    },
+  });
 
   const fileInputRef = useRef(null);
 
@@ -66,14 +74,12 @@ function UserProfile({ session, user }) {
     fileInputRef.current.click();
   }
 
-  
-
   async function handleImageUpload(event) {
     const file = event.target.files[0];
 
     if (file) {
-      const bucketName = 'profile_photo'; // Replace with your actual bucket name
-      const filePath = `${userDb.email}/${file.name}`; // Define the file path
+      const bucketName = 'profile_photo';
+      const filePath = `${userDb.email}/${file.name}`;
       const { data, error } = await supabaseClient.storage
         .from(bucketName)
         .upload(filePath, file);
@@ -83,21 +89,25 @@ function UserProfile({ session, user }) {
       } else {
         console.log('File uploaded successfully:', data);
         const uploadedImageUrl = supaBaseUrl + storageURLExtension + bucketName + '/' + data.path;
-        // Add the uploaded image to the images array
+
         setImages((prevImages) => [...prevImages, uploadedImageUrl]);
       }
     }
-    
   }
 
   const styles = {
-    backgroundColor: bkcolor
-	}
+    backgroundColor: bkcolor,
+    fontFamily: 'Pacifico, cursive',
+  };
 
   return (
     <div className="min-h-screen min-w-max backgroundUser">
       <NavBar />
-      <div className="user-profile-container" style={{display:"flex",flexDirection:"row",justifyContent:"space-around"}}>
+      <p style={{ fontSize: '34px', textAlign: 'center' }}>
+        <span style={{ fontFamily: 'Pacifico, cursive' }}>👨‍🍳 User Profile 👨‍🍳</span>
+      </p>
+      <br></br>
+      <div className="user-profile-container" style={{ display: "flex", flexDirection: "row", justifyContent: "space-around" }}>
         <div className="user-main-card" style={styles}>
           <img
             src="/images/NoUserPicture.jpg"
@@ -109,42 +119,46 @@ function UserProfile({ session, user }) {
           <p className="user-info">
             Followers: {userDb?.followers} | Following: {userDb?.following}
           </p>
-          <button className="see-recipes-button" onClick={()=> location.href = "/my-recipes"}>See Recipes</button>
+          <button className="see-recipes-button" onClick={() => window.location.href = "/my-recipes"}>See Recipes</button>
+          <button className="toggle-color-picker-button see-recipes-button" onClick={() => setShowColorPicker(!showColorPicker)}>
+            {showColorPicker ? 'Hide Color Picker' : 'Show Color Picker'}
+          </button>
         </div>
 
         <div>
-          <ColorPicker color={bkcolor} handleColorChange={(event)=>setbkcolor(event.hex)} />
-          <p class="center">Style your card!!</p>
+          {showColorPicker && <ColorPicker color={bkcolor} handleColorChange={(event) => setbkcolor(event.hex)} />}
         </div>
       </div>
 
-
-
-
-
-
-
       <div>
         <div className="user-picture-section card">
-            <h1 className="my-dishes-title">#MyDishes</h1>
-            <div className="picture-grid">
-              {images.map((imageUrl, index) => (
-                <img key={index} src={imageUrl} alt="Uploaded" className="grid-image" />
-              ))}
-            </div>
-            <button className="upload-button" onClick={handleOpenFileDialog}>
-              Add Image
-            </button>
-            <div style={{ marginTop: '10px' }}>
-              <input
-                type="file"
-                accept="image/*"
-                id="picture-upload"
-                ref={fileInputRef}
-                onChange={handleImageUpload}
-                style={{ display: 'none' }}/>
-            </div>
+          <h1 className="my-dishes-title">#MyDishes</h1>
+          <div className="picture-grid">
+          {images.map((imageUrl, index) => (
+            <img
+              key={index}
+              src={imageUrl}
+              alt="Uploaded"
+              className="grid-image cool-border-image" /* Apply the cool-border-image class */
+            />
+          ))}
           </div>
+
+
+          <button className="upload-button" onClick={handleOpenFileDialog}>
+            Add Image
+          </button>
+          <div style={{ marginTop: '10px' }}>
+            <input
+              type="file"
+              accept="image/*"
+              id="picture-upload"
+              ref={fileInputRef}
+              onChange={handleImageUpload}
+              style={{ display: 'none' }}
+            />
+          </div>
+        </div>
       </div>
     </div>
   );
