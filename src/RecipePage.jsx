@@ -1,10 +1,11 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import "./RecipePage.css";
 import { supabase } from '../lib/supabaseClient';
+import NavBar from './components/NavBar';
+import Footer from './components/Footer';
 
-const RecipePage = () => {
-  const { id } = useParams(); 
+function RecipePage() {
+  const { id } = useParams();
   const [recipe, setRecipe] = useState(null);
 
   useEffect(() => {
@@ -30,44 +31,43 @@ const RecipePage = () => {
   }
 
   return (
-    <div className="recipe-page min-h-screen">
-      <div className="recipe-title">
-        <h1>{recipe.recipeName}</h1>
+    <>
+    <NavBar />
+      <div className="container main">
+      <div className="section second details">
+        <div className="col img">
+          <img src={recipe.image} alt={recipe.recipeName} />
+        </div>
+        <div className="col type">
+          <h1 className="title">{recipe.recipeName}</h1>
+          <p className="info">{recipe.description}</p>
+        </div>
       </div>
 
-      <div className="flex-container">
-        <div className="flex-item">
-            <img src={recipe.image} alt={recipe.recipeName} className="recipe-image" />
+      <div className="section second details">
+        <div className="col type">
+          <h2 className='stitle'>Ingredients</h2>
+          {recipe.ingredients && recipe.ingredients.map((item, index) => (
+            <p className="steps" key={index}>{item}</p>
+        ))}
         </div>
-
-        <div className="flex-item">
-           <h2 className='h2' style={{ marginBottom: '50px' }}>Description</h2>
-           <p ><strong>{recipe.description}</strong></p>
+        <div className="col type">
+          <h3 className='stitle'>Serving</h3>
+          <p className="steps">{recipe.serving} persons</p>
+          <h3 className='stitle'>Preparation Time</h3>
+          <p className="steps">{recipe.prepTime} min</p>
+          <h3 className='stitle'>Cooking Time</h3>
+          <p className="steps">{recipe.cookTime} min</p>
         </div>
-     </div>
-
-     <div className="flex-container">
-        <div className="flex-item">
-          <h2 className='h2'>Created By:</h2>
-          <p><strong>{recipe.author}</strong></p>
-          <h2 className='h2'>Date:</h2>
-          <p><strong>{recipe.creation_date}</strong></p>
+        <div className="col type">
+          <h2 className='stitle'>Instruction</h2>
+          <p className="info">{recipe.instructions}</p>
         </div>
-
-        <div className="flex-item">
-          <p><h2 className='h2'>Serving:</h2><strong>{recipe.serving}</strong></p>
-          <p><h2 className='h2'>Preparation Time:</h2><strong>{recipe.prepTime}</strong></p>
-          <p><h2 className='h2'>Cooking Time:</h2><strong>{recipe.cookTime}</strong></p>
-        </div>
-
-        <div className="flex-item">
-         <h2 className='h2'>Instructions</h2>
-          <p><strong>{recipe.instructions}</strong></p>
-        </div>
-        
       </div>
-    </div>
+      </div>
+      <Footer />
+    </>
   );
-};
+}
 
 export default RecipePage;

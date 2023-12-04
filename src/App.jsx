@@ -13,7 +13,8 @@ import RecipePage from './RecipePage';
 import { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabaseClient';
 import SignOutPage from './SignOutPage';
-
+import NavBar from './components/NavBar';
+import About from './About';
 function App() { 
 
   const [session, setSession] = useState(null);
@@ -75,7 +76,11 @@ function App() {
     {
       path: "/recipes/:id",
       element: <RecipePage session={session} user={user} />,
-    }
+    },
+    {
+      path: "/about",
+      element: <About />,
+    },
   ]);
 
   return (

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabaseClient';
 
+
 const SignOutPage = () => {
   const [countdown, setCountdown] = useState(2);
 

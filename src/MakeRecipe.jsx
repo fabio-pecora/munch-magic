@@ -4,6 +4,7 @@ import "./recipe.css";
 import { supabase } from '../lib/supabaseClient';
 import NavBar from './components/NavBar';
 import { Link } from 'react-router-dom';
+import Footer from './components/Footer';
 
 const CreateRecipe = ({session, user}) => {
 
@@ -105,6 +106,7 @@ const CreateRecipe = ({session, user}) => {
   return (
     <>
     <NavBar />
+    <div className="container main">
     <div className="min-w-screen min-h-screen recipebg">
     
     <div className="recipe-create-container">
@@ -179,6 +181,8 @@ const CreateRecipe = ({session, user}) => {
       </form>
     </div>
   </div>
+  </div>
+  <Footer />
   </>
   );
 };

@@ -17,43 +17,37 @@ const NavBar = () => {
   };
 
   return (
-    <nav className="bg-yellow-200 border-b-2 border-yellow-300 flex items-center justify-between px-4 py-3">
-      <div className="flex items-center">
-        <Link to="/" className="text-2xl font-bold text-gray-800">
-          Home
+<nav className="navbar container">
+  <div className="flex items-center">
+    <Link to="/" className="logo">
+      M<span>un</span>chMagic
+    </Link>
+  </div>
+  <div className="nav-links">
+  {loggedIn && (
+      <>
+        <Link to="/my-recipes" className="active">
+          My Recipes
         </Link>
-        {loggedIn && (
-          <>
-          <Link to="/my-recipes" className="ml-4 text-lg text-gray-800">
-            My Recipes
-          </Link>
-          <Link to="/CreateRecipe" className="ml-4 text-lg text-gray-800">
-            Create Recipe
-          </Link>
-          </>
-        )}
-      </div>
-      <div className="flex items-center">
-        {loggedIn && (
-          <a href="/account-settings" className="mr-4 text-lg text-gray-800">
-            Account Settings
-          </a>
-        )}
-        <button
-          onClick={handleLogout}
-          className="btn bg-pink-500 hover:bg-pink-600 text-white font-bold py-2 px-4 rounded"
-        >
-          {"Logout"}
-        </button>
-        <Link to="/profile"> {/* Use Link for Profile button */}
-          <button
-            className="btn bg-pink-500 hover:bg-pink-600 text-white font-bold py-2 px-4 rounded ml-4"
-          >
-            Profile
-          </button>
+        <Link to="/CreateRecipe" className="">
+          Create Recipe
         </Link>
-      </div>
-    </nav>
+      </>
+    )}
+    <Link to="/profile">
+      Profile
+    </Link>
+    <Link to="/about" >
+      About
+    </Link>
+    <button
+      onClick={handleLogout}
+      className="btn bg-pink-500 hover:bg-pink-600 text-white font-bold py-2 px-4 rounded m-4"
+    >
+      Logout
+    </button>
+  </div>
+</nav>
   );
 };
 

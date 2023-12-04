@@ -101,8 +101,11 @@ function UserProfile({ session, user }) {
   };
 
   return (
+    <>
+    <NavBar />
+    <div className="container main">
     <div className="min-h-screen min-w-max backgroundUser">
-      <NavBar />
+      
       <p style={{ fontSize: '34px', textAlign: 'center' }}>
         <span style={{ fontFamily: 'Pacifico, cursive' }}>👨‍🍳 User Profile 👨‍🍳</span>
       </p>
@@ -161,6 +164,8 @@ function UserProfile({ session, user }) {
         </div>
       </div>
     </div>
+    </div>
+    </>
   );
 }
 
