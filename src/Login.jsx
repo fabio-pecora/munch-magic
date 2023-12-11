@@ -42,6 +42,26 @@ export default function Login() {
 
     return (
         <div className="login-container">
+        
+    <div className="cont">
+        <h2>Login</h2>
+        <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+        />
+        <br></br>
+        <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+        />
+        <br></br>
+        <button onClick={() => handleLogin(email, password)} disabled={loading}>
+            {loading ? "Loading..." : "Login"}
+        </button>
         {session && (
             <div>
                 <h1>You're logged in!</h1>
@@ -53,22 +73,9 @@ export default function Login() {
     
             </div>
         )}
-        <h2>Login</h2>
-        <input
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-        />
-        <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-        />
-        <button onClick={() => handleLogin(email, password)} disabled={loading}>
-            {loading ? "Loading..." : "Login"}
-        </button>
-    </div>
+     </div>
+
+     
+</div>
     )
 }

@@ -5,12 +5,38 @@
     justify-content: center;
     height: 100vh;
     background: url('https://png.pngtree.com/thumb_back/fh260/back_our/20200630/ourmid/pngtree-hand-drawn-cartoon-cute-food-banner-background-image_342450.jpg') repeat; 
+  
+
 }
+/* CSS */
+.cont {
+    background-color: rgb(239, 229, 211);
+    border-radius: 2em;
+    width: 25em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2em;
+    margin: auto;
+    margin-top: 15%;
+}
+
+
+
+
+
+
 
 .login-container h2 {
     color: #333;
     font-size: 2em;
     margin-bottom: 1em;
+}
+.login-container h1{
+    color: #333;
+    font-size: 1.5em;
+    margin-top: 1em;
 }
 
 .login-container input {
@@ -21,11 +47,22 @@
     border-radius: 5px;
 }
 
-.login-container button {
-    padding: 0.5em 1em;
+
+
+.login-container button,
+.login-container a {
+    padding: 0.75em 1.5em;
     font-size: 1em;
     border: none;
     border-radius: 5px;
     background-color: #333;
     color: #fff;
+    text-decoration: none; 
+    margin-right: 10px; 
+
+}
+
+.login-container button:hover,
+.login-container a:hover {
+    background-color: #555; 
 }

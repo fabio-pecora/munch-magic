@@ -41,15 +41,15 @@ const CreateRecipe = ({session, user}) => {
   const handleRecipeSubmit = async (e) => {
     e.preventDefault(); 
     console.log('Form submitted'); 
-
+  
     console.log(recipeData);
-
+  
     const currentDate = new Date().toISOString(); 
-
-    
+  
     try {
-      const { data: { user } } = await supabase.auth.getUser()
+      const user = await supabase.auth.getUser(); // Corrected line
       console.log('Attempting to insert recipe');
+      console.log(user.data.user.email);
       const { data, error } = await supabase
         .from('recipes')
         .insert([
@@ -61,7 +61,7 @@ const CreateRecipe = ({session, user}) => {
             cookTime: recipeData.cookTime,
             instructions: recipeData.instructions,
             image: recipeData.image,
-            author: user.email,
+            author: user.data.user.email,
             creation_date: currentDate,
           },
         ]);
@@ -75,7 +75,7 @@ const CreateRecipe = ({session, user}) => {
     } catch (error) {
       console.error('An error occurred:', error);
     }
-
+  
     console.log('Form submission complete');
   };
   
